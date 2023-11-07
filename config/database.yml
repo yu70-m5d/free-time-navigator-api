@@ -11,23 +11,23 @@
 #
 default: &default
   adapter: mysql2
-  encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= ENV['DATABASE_USER']%>
-  password: <%= ENV['DATABASE_PASSWORD']%>
-  host: <%= ENV['DATABASE_HOST']%>
-  socket: /tmp/mysql.sock
+  timeout: 5000
+  encoding: utf8
+  username: <%= ENV["DATABASE_USER"] %>
+  password: <%= ENV["DATABASE_DEVELOPMENT_PASSWORD"] %>
+  host: localhost
 
 development:
   <<: *default
-  database: api_development
+  database: ftn_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: api_test
+  database: ftn_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -50,7 +50,5 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: api_production
-  username: api
-  password: <%= ENV["API_DATABASE_PASSWORD"] %>
+  database: ftn_production
+  password: <%= ENV["DATABASE_PRODUCTION_PASSWORD"] %>
