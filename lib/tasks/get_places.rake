@@ -10,25 +10,9 @@ namespace :get_places do
               'park', 'pet_store', 'pharmacy', 'post_office', 'restaurant',
               'shoe_store', 'shopping_mall', 'spa', 'zoo' ]
 
-    # types = [ 'amusement_park', 'aquarium', 'art_gallery', 'bakery', 'bar' ]
-
     radius = 1000
 
     types.each do |type|
-    #   puts "====================="
-    #   puts "#{type}の検索結果"
-    #   puts "---------------------"
-    #   client.spots(35.5435083,139.4359084, :types => type, :radius => radius, :detail => true).each do |spot|
-    #     puts spot.name
-    #     puts spot.types
-    #     puts spot.formatted_address
-    #     puts spot.lat
-    #     puts spot.lng
-    #     puts spot.rating
-    #     puts spot.url
-    #     puts "--------------------"
-    #   end
-    # end
       client.spots(35.5435083,139.4359084, :types => type, :radius => radius, :detail => true).each do |spot|
         puts "--------------------"
         add_db_spot = Spot.new
