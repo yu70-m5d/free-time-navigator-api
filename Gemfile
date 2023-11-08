@@ -49,3 +49,6 @@ end
 
 gem "dotenv-rails"
 gem "google_places"
+
+gem "open-uri"
+gem "nokogiri"
