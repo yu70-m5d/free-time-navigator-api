@@ -1,7 +1,8 @@
 namespace :get_places do
   desc '施設情報取得'
   task get_spots: :environment do
-    client = GooglePlaces::Client.new(ENV['GOOGLE_API_KEY'])
+    api_key = Rails.application.credentials.api&.fetch(:google_api_key)
+    client = GooglePlaces::Client.new(api_key)
     types = [ 'amusement_park', 'aquarium', 'art_gallery', 'bakery', 'bar',
               'beauty_salon', 'book_store', 'bowling_alley', 'cafe', 'casino',
               'city_hall', 'clothing_store', 'department_store', 'electronics_store', 'food',
