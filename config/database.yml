@@ -50,6 +50,7 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
+  <<: *default
   database: ftn_production
   username: <%= Rails.application.credentials.planetscale&.fetch(:username) %>
   password: <%= Rails.application.credentials.planetscale&.fetch(:password) %>
