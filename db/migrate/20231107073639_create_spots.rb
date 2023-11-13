@@ -3,8 +3,8 @@ class CreateSpots < ActiveRecord::Migration[7.0]
     create_table :spots do |t|
       t.string :name, null: false
       t.string :address, null: false
-      t.float :latitude, null: false
-      t.float :longitude, null: false
+      t.float :latitude, limit: 53, null: false
+      t.float :longitude,limit: 53, null: false
       t.float :rating
       t.time :average_stay_time
       t.string :image
