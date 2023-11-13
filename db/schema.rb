@@ -14,8 +14,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_07_073639) do
   create_table "spots", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "address", null: false
-    t.float "latitude", null: false
-    t.float "longitude", null: false
+    t.float "latitude", limit: 53, null: false
+    t.float "longitude", limit: 53, null: false
     t.float "rating"
     t.time "average_stay_time"
     t.string "image"
