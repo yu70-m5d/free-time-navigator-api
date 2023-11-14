@@ -40,4 +40,47 @@ namespace :get_places do
       end
     end
   end
+
+  desc '施設ID取得'
+  task get_placeid: :environment do
+    api_key = Rails.application.credentials.api&.fetch(:google_api_key)
+    client = GooglePlaces::Client.new(api_key)
+
+    spots = Spot.all
+    spots.each do |spot|
+      client.spots(spot.latitude, spot.longitude, name: spot.name, detail: true).each do |result|
+        pp result.formatted_address
+        if result.name == spot.name && result.formatted_address == spot.address
+          puts "--------------------------------------------------"
+          puts spot.id
+          puts spot.name
+          puts result.name
+          puts spot.address
+          puts result.formatted_address
+          spot.place_id = result.place_id
+          if spot.save
+            puts "save"
+          else
+            puts "FAILED"
+            pp spot.errors
+          end
+        end
+      end
+    end
+  end
+
+  desc '施設情報確認'
+  task confirm_spot: :environment do
+    api_key = Rails.application.credentials.api&.fetch(:google_api_key)
+    client = GooglePlaces::Client.new(api_key)
+    spot = Spot.find(12)
+    result_of_name = client.spots_by_query(spot.name).first
+    result_of_address = client.spots_by_query(spot.address).first
+    client.spots(spot.latitude, spot.longitude, name: spot.name).each do |result|
+      pp result
+    end
+    pp spot
+    pp result_of_name
+    pp result_of_address
+  end
 end
