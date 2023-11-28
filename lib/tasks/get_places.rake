@@ -3,13 +3,19 @@ namespace :get_places do
   task get_spots: :environment do
     api_key = Rails.application.credentials.api&.fetch(:google_api_key)
     client = GooglePlaces::Client.new(api_key)
-    types = [ 'amusement_park', 'aquarium', 'art_gallery', 'bakery', 'bar',
-              'beauty_salon', 'book_store', 'bowling_alley', 'cafe', 'casino',
-              'city_hall', 'clothing_store', 'department_store', 'electronics_store', 'food',
-              'furniture_store', 'grocery_or_supermarket', 'gym', 'hair_care', 'jewelry_store',
-              'library', 'meal_takeaway', 'movie_theater', 'museum', 'night_club',
-              'park', 'pet_store', 'pharmacy', 'post_office', 'restaurant',
-              'shoe_store', 'shopping_mall', 'spa', 'zoo' ]
+    # types = [ 'amusement_park', 'aquarium', 'art_gallery', 'bakery', 'bar',
+    #           'beauty_salon', 'book_store', 'bowling_alley', 'cafe', 'casino',
+    #           'city_hall', 'clothing_store', 'department_store', 'electronics_store', 'food',
+    #           'furniture_store', 'grocery_or_supermarket', 'gym', 'hair_care', 'jewelry_store',
+    #           'library', 'meal_takeaway', 'movie_theater', 'museum', 'night_club',
+    #           'park', 'pet_store', 'pharmacy', 'post_office', 'restaurant',
+    #           'shoe_store', 'shopping_mall', 'spa', 'zoo' ]
+
+    types = [ 'aquarium', 'art_gallery', 'bakery', 'bar', 'book_store',
+              'cafe', 'clothing_store', 'department_store', 'electronics_store', 'food',
+              'furniture_store', 'grocery_or_supermarket', 'library', 'meal_takeaway', 'movie_theater',
+              'museum', 'park', 'pet_store', 'pharmacy', 'restaurant',
+              'shoe_store', 'shopping_mall', 'spa' ]
 
     radius = 1000
 

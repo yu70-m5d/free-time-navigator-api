@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_14_040907) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_28_034224) do
   create_table "spots", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "address", null: false
@@ -23,6 +23,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_14_040907) do
     t.datetime "updated_at", null: false
     t.string "place_id"
     t.index ["name"], name: "index_spots_on_name", unique: true
+    t.index ["place_id"], name: "place_id", unique: true
+  end
+
+  create_table "tags", charset: "utf8mb3", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
 end
