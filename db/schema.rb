@@ -16,14 +16,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_28_050107) do
     t.string "address", null: false
     t.float "latitude", limit: 53, null: false
     t.float "longitude", limit: 53, null: false
+    t.string "place_id"
     t.float "rating"
     t.time "average_stay_time"
     t.string "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "place_id"
     t.index ["name"], name: "index_spots_on_name", unique: true
-    t.index ["place_id"], name: "place_id", unique: true
+    t.index ["place_id"], name: "index_spots_on_place_id", unique: true
   end
 
   create_table "taggings", charset: "utf8mb3", force: :cascade do |t|

@@ -4,4 +4,5 @@ set -o errexit
 
 bundle install
 bundle exec rake db:migrate
+bundle exec rake tags:create_tags_table
 bundle exec rake spots:get_spots
