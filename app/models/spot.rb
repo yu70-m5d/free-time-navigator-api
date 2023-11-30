@@ -1,7 +1,7 @@
 class Spot < ApplicationRecord
-  # associations
-  has_many :tags, through: :taggings
+  # add associations
   has_many :taggings
+  has_many :tags, through: :taggings
   # add validates
   validates :name, presence: true, uniqueness: true
   validates :address, presence: true

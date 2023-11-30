@@ -1,5 +1,7 @@
 class Tag < ApplicationRecord
+  # add associations
+  has_many :taggings
   has_many :spots, through: :taggings
-  has_many :tags
+  # add validates
   validates :name, presence: true, uniqueness: true
 end

@@ -17,10 +17,11 @@ namespace :spots do
               'museum', 'park', 'pet_store', 'pharmacy', 'restaurant',
               'shoe_store', 'shopping_mall', 'spa' ]
 
-    radius = 1000
+    radius = 1500
 
     types.each do |type|
-      client.spots(35.5435083,139.4359084, :types => type, :radius => radius, :detail => true).each do |spot|
+      client.spots(35.54358, 139.4448397, :types => type, :radius => radius, :detail => true).each do |spot|
+
         puts "--------------------"
         add_db_spot = Spot.new
         add_db_spot.name = spot.name
@@ -28,6 +29,7 @@ namespace :spots do
         add_db_spot.latitude = spot.lat
         add_db_spot.longitude = spot.lng
         add_db_spot.rating = spot.rating
+        add_db_spot.place_id = spot.place_id
 
         if spot.photos[0].present?
           image_url = spot.photos[0].fetch_url(800)
@@ -37,9 +39,24 @@ namespace :spots do
         pp add_db_spot
 
         if add_db_spot.save
-          puts "SUCCESS!!"
+          puts "SpotSave!!"
+          spot.types.each do |tag_name|
+            tag = Tag.find_by(name: tag_name)
+            if tag.present?
+              tagging = Tagging.new(spot_id: Spot.last.id, tag_id: tag.id)
+              if tagging.save
+                puts "TaggingSave!!"
+              else
+                puts "TaggingFALSE!!"
+                pp tagging.errors
+              end
+            else
+              next
+            end
+          end
+
         else
-          puts "FALSE!!"
+          puts "SpotFALSE!!"
           pp add_db_spot.errors
           next
         end
