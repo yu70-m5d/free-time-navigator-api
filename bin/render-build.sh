@@ -3,6 +3,5 @@
 set -o errexit
 
 bundle install
-bundle exec rake db:migrate
-bundle exec rake get_places:get_spots
-bundle exec rake get_places:get_placeid
+bundle exec rake db:migrate:reset
+bundle exec rake spots:get_spots
