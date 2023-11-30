@@ -8,8 +8,7 @@ namespace :tags do
               'shoe_store', 'shopping_mall', 'spa', 'tourist_attraction', 'place_of_worship' ]
 
     types.each do |type|
-      tag = Tag.new(name: type)
-      tag.save
+      tag = Tag.create!(name: type)
     end
   end
 end
