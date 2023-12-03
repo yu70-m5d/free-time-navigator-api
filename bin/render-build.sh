@@ -3,5 +3,5 @@
 set -o errexit
 
 bundle install
-bundle exec rake db:migrate:reset
-bundle exec rake spots:get_spots
+bundle exec rake db:migrate
+bundle exec rake tags:add_time
