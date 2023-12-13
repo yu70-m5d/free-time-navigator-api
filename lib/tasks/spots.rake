@@ -1,4 +1,56 @@
 namespace :spots do
+  desc '施設情報取得new'
+  task get_places: :environment do
+    api_key = Rails.application.credentials.api&.fetch(:google_api_key)
+    client = GooglePlaces::Client.new(api_key)
+    lat = 35.54358
+    lng = 139.4448397
+    radius = 1500
+    tags = Tag.all
+    types = []
+    tags.each {|tag| types << tag.name}
+
+    types.each do |type|
+      client.spots(lat, lng, types: type, radius: radius).each do |spot|
+        puts "---------------------------------------------------------"
+        place = Spot.new(place_id: spot.place_id)
+
+        result = client.spot(place.place_id, language: 'ja')
+        place.name = result.name
+        place.address = result.formatted_address
+        place.latitude = result.lat
+        place.longitude = result.lng
+        place.rating = result.rating
+        if result.photos[0].present?
+          image_url = result.photos[0].fetch_url(800)
+          place.image = image_url
+        end
+
+        if place.save
+          puts "SpotSave!!"
+          result.types.each do |tag_name|
+            tag = Tag.find_by(name: tag_name)
+            if tag.present?
+              tagging = Tagging.new(spot_id: Spot.last.id, tag_id: tag.id)
+              if tagging.save
+                puts "TaggingSave!!"
+              else
+                puts "TaggingFALSE!!"
+                pp tagging.errors
+              end
+            else
+              next
+            end
+          end
+        else
+          puts "SpotFALSE!!"
+          pp place.errors
+          next
+        end
+      end
+    end
+  end
+
   desc '施設情報取得'
   task get_spots: :environment do
     api_key = Rails.application.credentials.api&.fetch(:google_api_key)
@@ -20,7 +72,7 @@ namespace :spots do
     radius = 1500
 
     types.each do |type|
-      client.spots(35.54358, 139.4448397, :types => type, :radius => radius, :detail => true).each do |spot|
+      client.spots(35.54358, 139.4448397, :language => 'ja', :types => type, :radius => radius, :detail => true).each do |spot|
 
         puts "--------------------"
         add_db_spot = Spot.new
@@ -105,5 +157,29 @@ namespace :spots do
     pp spot
     pp result_of_name
     pp result_of_address
+  end
+
+  desc '施設取得テスト'
+  task get_spots_test: :environment do
+    api_key = Rails.application.credentials.api&.fetch(:google_api_key)
+    client = GooglePlaces::Client.new(api_key)
+    tags = Tag.all
+    types = []
+    tags.each do |tag|
+      types << tag.name
+    end
+
+    type = 'cafe'
+
+    radius = 100
+
+    # types.each do |type|
+    #   client.spots(35.54358, 139.4448397, :language => 'ja', :types => type).each do |spot|
+
+    #     puts "--------------------"
+    #     pp spot
+    #   end
+    # end
+    pp client.spot("ChIJey6Ne7P-GGARWGOMcxPW8GQ", language: 'ja')
   end
 end

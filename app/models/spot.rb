@@ -7,6 +7,7 @@ class Spot < ApplicationRecord
   validates :address, presence: true
   validates :latitude, presence: true
   validates :longitude, presence: true
+  validates :place_id, presence: true, uniqueness: true
 
   def within_radius?(lat1, lng1, lat2, lng2)
     radius = 1.5
