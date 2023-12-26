@@ -49,6 +49,9 @@ end
 
 gem "dotenv-rails"
 gem "google_places"
+gem "geocoder"
 
 gem "open-uri"
 gem "nokogiri"
+
+gem "seed_dump"

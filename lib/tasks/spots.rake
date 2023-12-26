@@ -3,24 +3,26 @@ namespace :spots do
   task get_places: :environment do
     api_key = Rails.application.credentials.api&.fetch(:google_api_key)
     client = GooglePlaces::Client.new(api_key)
-    lat = 35.54358
-    lng = 139.4448397
+    lat = 35.4660694
+    lng = 139.6226196
     radius = 1500
     tags = Tag.all
     types = []
     tags.each {|tag| types << tag.name}
 
+    # 約500リクエスト
     types.each do |type|
-      client.spots(lat, lng, types: type, radius: radius).each do |spot|
+      client.spots(lat, lng, types: type, language: 'ja', radius: radius).each do |result|
         puts "---------------------------------------------------------"
-        place = Spot.new(place_id: spot.place_id)
+        place = Spot.new
 
-        result = client.spot(place.place_id, language: 'ja')
         place.name = result.name
-        place.address = result.formatted_address
+        place.address = result.vicinity
         place.latitude = result.lat
         place.longitude = result.lng
         place.rating = result.rating
+        place.place_id = result.place_id
+
         if result.photos[0].present?
           image_url = result.photos[0].fetch_url(800)
           place.image = image_url
@@ -69,15 +71,18 @@ namespace :spots do
               'museum', 'park', 'pet_store', 'pharmacy', 'restaurant',
               'shoe_store', 'shopping_mall', 'spa' ]
 
+    latitude = 35.6899573
+    longitude = 139.7005071
+
     radius = 1500
 
     types.each do |type|
-      client.spots(35.54358, 139.4448397, :language => 'ja', :types => type, :radius => radius, :detail => true).each do |spot|
+      client.spots( latitude, longitude, :language => 'ja', :types => type, :radius => radius, :detail => true).each do |spot|
 
         puts "--------------------"
         add_db_spot = Spot.new
         add_db_spot.name = spot.name
-        add_db_spot.address = spot.formatted_address
+        add_db_spot.address = spot.vicinity
         add_db_spot.latitude = spot.lat
         add_db_spot.longitude = spot.lng
         add_db_spot.rating = spot.rating
@@ -161,6 +166,7 @@ namespace :spots do
 
   desc '施設取得テスト'
   task get_spots_test: :environment do
+    Geocoder.configure( :language => :ja )
     api_key = Rails.application.credentials.api&.fetch(:google_api_key)
     client = GooglePlaces::Client.new(api_key)
     tags = Tag.all
@@ -169,9 +175,13 @@ namespace :spots do
       types << tag.name
     end
 
+    latitude = 35.6899573
+    longitude = 139.7005071
+
+
     type = 'cafe'
 
-    radius = 100
+    radius = 1000
 
     # types.each do |type|
     #   client.spots(35.54358, 139.4448397, :language => 'ja', :types => type).each do |spot|
@@ -180,6 +190,41 @@ namespace :spots do
     #     pp spot
     #   end
     # end
-    pp client.spot("ChIJey6Ne7P-GGARWGOMcxPW8GQ", language: 'ja')
+    # pp client.spot("ChIJey6Ne7P-GGARWGOMcxPW8GQ", language: 'ja')
+    count = 0
+    next_page_token = []
+
+    client.spots(latitude, longitude, :language => 'ja', :types => type, :radius => radius).each do |spot|
+      count += 1
+      result = Geocoder.address("#{spot.lat}, #{spot.lng}")
+      pp spot
+      pp result
+      pp count
+
+    end
+  end
+
+  desc 'リバースジオコーディング'
+  task reverse_geocoding: :environment do
+    Geocoder.configure( :language => :ja )
+    lat = 35.662055
+    lng = 139.702655
+    result = Geocoder.address("#{lat}, #{lng}")
+    pp result
+  end
+
+  desc '重心取得'
+  task get_center: :environment do
+    lat1 = 35.69638888
+    lng1 = 139.78305555
+    lat2 = 35.68583333
+    lng2 = 139.73000000
+    lat3 =35.70527777
+    lng3 = 139.77000000
+
+    lat_center = ( lat1 + lat2 + lat3 ) / 3
+    lng_center = ( lng1 + lng2 + lng3 ) / 3
+    pp lat_center
+    pp lng_center
   end
 end
