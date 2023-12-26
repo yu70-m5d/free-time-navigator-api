@@ -10,6 +10,7 @@ namespace :tags do
     types.each do |type|
       tag = Tag.create!(name: type)
     end
+
   end
 
   desc 'stay_time追加'
