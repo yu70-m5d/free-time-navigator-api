@@ -206,6 +206,7 @@ DEPENDENCIES
   geocoder
   google_places
   mysql2
+  net-smtp
   nokogiri
   open-uri
   pry-rails
