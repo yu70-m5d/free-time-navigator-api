@@ -55,3 +55,5 @@ gem "open-uri"
 gem "nokogiri"
 
 gem "seed_dump"
+
+gem "net-smtp"
