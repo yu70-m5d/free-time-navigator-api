@@ -24,9 +24,9 @@ class Api::V1::SpotsController < ApplicationController
         params[:tags].any? { |tag| spot.tags.pluck(:name).include?(tag) }
       end
     end
-    @spots = @spots.as_json(include: [:tags])
+    spots_json = @spots.as_json(include: [:tags])
 
-    render json: @spots
+    render json: spots_json
   end
 
   def show

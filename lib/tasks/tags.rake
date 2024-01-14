@@ -20,7 +20,7 @@ namespace :tags do
     types_of_60min = [  'clothing_store', 'department_store', 'electronics_store', 'furniture_store', 'shopping_mall',
                         'tourist_attraction', 'place_of_worship', 'cafe'  ]
     types_of_90min = [  'library' ]
-    types_of_120min = [ 'aquarium', 'art_gallery' ]
+    types_of_120min = [ 'aquarium', 'art_gallery', 'museum' ]
     types_of_150min = [ 'food', 'bar', 'movie_theater', 'restaurant'  ]
     types_of_180min = [ 'spa' ]
 
