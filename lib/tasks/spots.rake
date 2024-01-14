@@ -3,8 +3,8 @@ namespace :spots do
   task get_places: :environment do
     api_key = Rails.application.credentials.api&.fetch(:google_api_key)
     client = GooglePlaces::Client.new(api_key)
-    lat = 35.4660694
-    lng = 139.6226196
+    lat = 34.9851603
+    lng = 135.7584294
     radius = 1500
     tags = Tag.all
     types = []
@@ -16,12 +16,19 @@ namespace :spots do
         puts "---------------------------------------------------------"
         place = Spot.new
 
-        place.name = result.name
+        def remove_emoji(string)
+          emoji_regex = /\p{Emoji}/
+          string.gsub(emoji_regex, '')
+        end
+
+        place.name = remove_emoji(result.name)
         place.address = result.vicinity
         place.latitude = result.lat
         place.longitude = result.lng
         place.rating = result.rating
         place.place_id = result.place_id
+
+        p place
 
         if result.photos[0].present?
           image_url = result.photos[0].fetch_url(800)
@@ -30,6 +37,8 @@ namespace :spots do
 
         if place.save
           puts "SpotSave!!"
+          puts type
+          puts place.name
           result.types.each do |tag_name|
             tag = Tag.find_by(name: tag_name)
             if tag.present?
@@ -226,5 +235,21 @@ namespace :spots do
     lng_center = ( lng1 + lng2 + lng3 ) / 3
     pp lat_center
     pp lng_center
+  end
+
+  desc '絵文字'
+  task remove_emoji: :environment do
+    def remove_emoji(string)
+      emoji_regex = /\p{Emoji}/
+
+      string.gsub(emoji_regex, '')
+    end
+    name1 = "ミニワン・ドンクエディテ 🥐ペリエ西船橋店"
+    name2 = "ミニワン・ドンクエディテ"
+    name_1 = remove_emoji(name1)
+    name_2 = remove_emoji(name2)
+
+    p name_1
+    p name_2
   end
 end
