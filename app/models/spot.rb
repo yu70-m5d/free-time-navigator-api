@@ -9,35 +9,21 @@ class Spot < ApplicationRecord
   validates :longitude, presence: true
   validates :place_id, presence: true, uniqueness: true
 
-  def within_radius?(lat1, lng1, lat2, lng2)
-    radius = 1.5
-    distance = haversine_distance(lat1, lng1, lat2, lng2)
-    distance <= radius
-  end
-
-  private
-
-  def haversine_distance(lat1, lng1, lat2, lng2)
-    # 地球の半径（単位:km）
-    radius = 6371
-
+  def self.within_radius_new(lat, lng)
     # 緯度経度をラジアンに変換
-    lat1_rad, lng1_rad, lat2_rad, lng2_rad = [lat1, lng1, lat2, lng2].map { |coord| deg2rad(coord) }
+    lat_rad = lat * Math::PI / 180
+    lng_rad = lng * Math::PI / 180
 
-    # 差の計算
-    dlat = lat2_rad - lat1_rad
-    dlng = lng2_rad - lng1_rad
+    # 1.5kmの距離に相当する緯度経度の差を計算
+    delta_lat = 1.5 / 6371.0 * (180 / Math::PI)
+    delta_lng = 1.5 / (6371.0 * Math.cos(lat_rad)) * (180 / Math::PI)
 
-    # はバーサインの公式に基づく距離の計算
-    a = Math.sin(dlat / 2) ** 2 + Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.sin(dlng / 2) ** 2
-    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-
-    # 距離（単位:km）
-    distance = radius * c
-  end
-
-  def deg2rad(deg)
-    deg * Math::PI / 180
+    # 指定範囲内のスポットを取得
+    where(
+      "latitude BETWEEN ? AND ? AND longitude BETWEEN ? AND ?",
+      lat - delta_lat, lat + delta_lat,
+      lng - delta_lng, lng + delta_lng
+    )
   end
 
 end
