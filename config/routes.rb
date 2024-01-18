@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      get '/spots/lead', to: 'spots#lead'
       resources :spots, only: %i[index show]
       resources :tags, only: %i[index]
       resources :contacts, only: %i[create]
