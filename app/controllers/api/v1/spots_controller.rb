@@ -6,9 +6,6 @@ class Api::V1::SpotsController < ApplicationController
     # 1.5km以内のスポットのみを取得
     @spots = Spot.within_radius_new(lat1, lng1).offset(10).includes(:tags)
 
-    @spots = @spots.select do |spot|
-      spot.within_radius?(lat1, lng1, spot.latitude, spot.longitude)
-    end
 
     if params[:time].present?
       time = params[:time].split(":")
