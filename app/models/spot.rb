@@ -9,7 +9,7 @@ class Spot < ApplicationRecord
   validates :longitude, presence: true
   validates :place_id, presence: true, uniqueness: true
 
-  def self.within_radius_new(lat, lng)
+  def self.within_radius(lat, lng)
     # 緯度経度をラジアンに変換
     lat_rad = lat * Math::PI / 180
     lng_rad = lng * Math::PI / 180
