@@ -10,6 +10,12 @@ class Spot < ApplicationRecord
   validates :place_id, presence: true, uniqueness: true
 
   def self.within_radius(lat, lng)
+
+    # 緯度経度がFloat型であることを確認
+    unless lat.is_a?(Float) && lng.is_a?(Float)
+      raise ArgumentError, "Invalid latitude or longitude"
+    end
+
     # 緯度経度をラジアンに変換
     lat_rad = lat * Math::PI / 180
     lng_rad = lng * Math::PI / 180
@@ -19,10 +25,9 @@ class Spot < ApplicationRecord
     delta_lng = 1.5 / (6371.0 * Math.cos(lat_rad)) * (180 / Math::PI)
 
     # 指定範囲内のスポットを取得
-    where(
-      "latitude BETWEEN ? AND ? AND longitude BETWEEN ? AND ?",
-      lat - delta_lat, lat + delta_lat,
-      lng - delta_lng, lng + delta_lng
+    spots_within_radius = where(
+      latitude: (lat - delta_lat)..(lat + delta_lat),
+      longitude: (lng - delta_lng)..(lng + delta_lng)
     )
   end
 
