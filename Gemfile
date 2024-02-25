@@ -57,3 +57,6 @@ gem "nokogiri"
 gem "seed_dump"
 
 gem "net-smtp"
+
+gem 'devise'
+gem 'devise_token_auth'
