@@ -60,3 +60,6 @@ gem "net-smtp"
 
 gem 'devise'
 gem 'devise_token_auth'
+
+gem 'omniauth-line'
+gem 'omniauth-rails_csrf_protection'

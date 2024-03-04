@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "http://localhost:3000", "https://free-time-navigator.vercel.app"
+    origins "http://localhost:3000", "https://927c-2001-268-c211-aeb6-31c7-98a-b0be-aef7.ngrok-free.app", "https://free-time-navigator.vercel.app"
 
     resource "*",
       headers: :any,
