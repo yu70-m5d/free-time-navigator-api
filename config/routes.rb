@@ -10,7 +10,8 @@ Rails.application.routes.draw do
       resources :spots, only: %i[index show]
       resources :tags, only: %i[index]
       resources :contacts, only: %i[create]
-      resources :users
+
+      post '/notifications/send_push_notification', to: 'notifications#send_push_notification'
     end
   end
   get '/omniauth/line_url', to: 'api/v1/auth/auth#line_url'
