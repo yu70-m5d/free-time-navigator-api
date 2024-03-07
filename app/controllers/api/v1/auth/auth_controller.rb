@@ -6,7 +6,7 @@ class Api::V1::Auth::AuthController < ApplicationController
     state = SecureRandom.hex(10) # CSRF対策のためにランダムな状態を生成
     scope = 'profile openid' # 必要に応じてスコープを設定
 
-    Rails.env.production? ? redirect_uri = production_uri : redirect_uri = development_uri
+    redirect_uri = Rails.env.production? ? production_uri : development_uri
 
 
     line_auth_url = "https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=#{client_id}&redirect_uri=#{redirect_uri}&state=#{state}&scope=#{scope}"
