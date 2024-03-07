@@ -9,7 +9,7 @@ class Api::V1::Auth::SessionsController < DeviseTokenAuth::SessionsController
       if @resource
         @token_data = @resource.create_token
         @resource.save!
-        render json: { userId: @resource.id, client: @token_data.client, token: @token_data.token, uid: @resource.uid }
+        render json: { userId: @resource.id, client: @token_data.client, token: @token_data.token, uid: @resource.uid, provider: @resource.provider }
       end
     else
       super
