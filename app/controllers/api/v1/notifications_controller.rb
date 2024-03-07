@@ -11,6 +11,8 @@ class Api::V1::NotificationsController < ApplicationController
     delay = (scheduled_time - Time.now).to_i
 
     SendPushNotificationJob.set(wait: delay.seconds).perform_later(uid, time)
+    # SendPushNotificationJob.set(wait: 0.seconds).perform_later(uid, time)
+
 
     render json: { message: "OK" }, status: :ok
   end
