@@ -1,7 +1,7 @@
 class Api::V1::Auth::AuthController < ApplicationController
   def line_url
     client_id = Rails.application.credentials.line&.fetch(:line_id)
-    development_uri = 'https://79dd-2001-268-c204-1b09-495e-8686-fb22-ce6d.ngrok-free.app/auth/line/callback'
+    development_uri = 'https://78ec-2001-268-c213-4648-2157-bc34-77ec-2162.ngrok-free.app/auth/line/callback'
     production_uri = 'https://free-time-navigator-api.onrender.com/auth/line/callback'
     state = SecureRandom.hex(10) # CSRF対策のためにランダムな状態を生成
     scope = 'profile openid' # 必要に応じてスコープを設定
