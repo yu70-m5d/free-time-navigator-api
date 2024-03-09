@@ -5,15 +5,16 @@ class SendPushNotificationJob < ApplicationJob
 
   def perform(uid, time)
     # Do something later
-    client ||= Line::Bot::Client.new { |config|
+    client ||= Line::Bot::Client.new do |config|
       config.channel_id = Rails.application.credentials.line&.fetch(:line_messaging_id)
       config.channel_secret = Rails.application.credentials.line&.fetch(:line_messaging_secret)
       config.channel_token = Rails.application.credentials.line&.fetch(:line_messaging_access_token)
-  }
+    end
+
 
     message = {
       type: 'text',
-      text: "#{time}です。通知を設定した時刻になりました！"
+      text: "まもなく、#{time}です！"
     }
 
     client.push_message(uid, message)
