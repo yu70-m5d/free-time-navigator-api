@@ -15,7 +15,7 @@ class SendPushNotificationJob < ApplicationJob
 
     message = {
       type: 'text',
-      text: "#{now_time}です。通知を設定した時刻になりました！"
+      text: "#{now_time}です。#{time}通知を設定した時刻になりました！"
     }
 
     client.push_message(uid, message)
