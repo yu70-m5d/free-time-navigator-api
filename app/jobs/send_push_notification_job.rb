@@ -11,11 +11,11 @@ class SendPushNotificationJob < ApplicationJob
       config.channel_token = Rails.application.credentials.line&.fetch(:line_messaging_access_token)
     end
 
-    now_time = Time.now
+    now_time = Time.zone.now
 
     message = {
       type: 'text',
-      text: "#{now_time}です。通知を設定した時刻になりました！"
+      text: "#{now_time}です。#{time}通知を設定した時刻になりました！"
     }
 
     client.push_message(uid, message)
