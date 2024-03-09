@@ -11,7 +11,7 @@ class SendPushNotificationJob < ApplicationJob
       config.channel_token = Rails.application.credentials.line&.fetch(:line_messaging_access_token)
     end
 
-    now_time = Time.now
+    now_time = Time.zone.now
 
     message = {
       type: 'text',
