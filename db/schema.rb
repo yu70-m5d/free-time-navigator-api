@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_23_132223) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_09_115057) do
   create_table "contacts", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -51,6 +51,18 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_23_132223) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
+  create_table "todos", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "tag_id"
+    t.string "title", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_todos_on_tag_id"
+    t.index ["user_id", "tag_id"], name: "index_todos_on_user_id_and_tag_id"
+    t.index ["user_id"], name: "index_todos_on_user_id"
   end
 
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
