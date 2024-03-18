@@ -7,4 +7,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[line]
   include DeviseTokenAuth::Concerns::User
+
+  has_many :tasks
+  has_many :tags, through: :todos
+
 end
