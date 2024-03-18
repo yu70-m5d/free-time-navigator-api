@@ -1,6 +1,6 @@
-class CreateTodos < ActiveRecord::Migration[7.0]
+class CreateTasks < ActiveRecord::Migration[7.0]
   def change
-    create_table :todos do |t|
+    create_table :tasks do |t|
       t.references :user, null: false
       t.references :tag
 
@@ -9,6 +9,6 @@ class CreateTodos < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
-    add_index :todos, [:user_id, :tag_id]
+    add_index :tasks, [:user_id, :tag_id]
   end
 end

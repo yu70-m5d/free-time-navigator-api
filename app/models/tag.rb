@@ -3,7 +3,7 @@ class Tag < ApplicationRecord
   has_many :taggings
   has_many :spots, through: :taggings
 
-  has_many :todos
+  has_many :tags
   has_many :users, through: :todos
 
   # add validates

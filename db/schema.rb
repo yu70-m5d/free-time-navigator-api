@@ -53,16 +53,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_09_115057) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "todos", charset: "utf8mb3", force: :cascade do |t|
+  create_table "tasks", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "tag_id"
     t.string "title", null: false
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tag_id"], name: "index_todos_on_tag_id"
-    t.index ["user_id", "tag_id"], name: "index_todos_on_user_id_and_tag_id"
-    t.index ["user_id"], name: "index_todos_on_user_id"
+    t.index ["tag_id"], name: "index_tasks_on_tag_id"
+    t.index ["user_id", "tag_id"], name: "index_tasks_on_user_id_and_tag_id"
+    t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
