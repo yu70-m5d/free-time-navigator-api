@@ -9,6 +9,22 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :tasks
-  has_many :tags, through: :todos
+  has_many :tags, through: :tasks
+
+  has_many :favorites
+  has_many :favorite_spots, through: :favorites, source: :spot
+
+
+  def favorite?(spot)
+    favorite_spots.include?(spot)
+  end
+
+  def add_favorite(spot)
+    favorite_spots << spot
+  end
+
+  def remove_favorite(spot)
+    favorite_spots.destroy(spot)
+  end
 
 end
