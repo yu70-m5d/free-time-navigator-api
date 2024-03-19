@@ -13,7 +13,7 @@ Rails.application.routes.draw do
       resources :tags, only: %i[index]
       resources :contacts, only: %i[create]
       resources :tasks, only: %i[index show create update destroy]
-      resources :favorites, only: %i[create destroy]
+      resources :favorites, only: %i[index create destroy]
 
       post '/notifications/send_push_notification', to: 'notifications#send_push_notification'
     end
