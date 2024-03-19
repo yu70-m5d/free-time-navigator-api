@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      get 'favorites/create'
+      get 'favorites/destroy'
       mount_devise_token_auth_for 'User', at: "auth", controllers: {
         registrations: "api/v1/auth/registrations",
         sessions: "api/v1/auth/sessions",
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
       resources :tags, only: %i[index]
       resources :contacts, only: %i[create]
       resources :tasks, only: %i[index show create update destroy]
+      resources :favorites, only: %i[create destroy]
 
       post '/notifications/send_push_notification', to: 'notifications#send_push_notification'
     end
