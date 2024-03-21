@@ -24,7 +24,7 @@ class Api::V1::Auth::OmniauthCallbacksController < DeviseTokenAuth::OmniauthCall
 
       sign_in(:user, @profile)
 
-      production_uri = "https://free-time-navigator.vercel.app//?userId=#{@profile.id}"
+      production_uri = "https://www.free-time-navigator.com/?userId=#{@profile.id}"
       development_uri = "http://localhost:3000/?userId=#{@profile.id}"
       redirect_url = Rails.env.production? ? production_uri : development_uri
 
