@@ -130,7 +130,6 @@ GEM
     minitest (5.20.0)
     msgpack (1.7.2)
     multi_xml (0.6.0)
-    mysql2 (0.5.5)
     net-http (0.4.1)
       uri
     net-imap (0.4.3)
@@ -174,6 +173,7 @@ GEM
       time
       uri
     orm_adapter (0.5.0)
+    pg (1.5.6)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -264,12 +264,12 @@ DEPENDENCIES
   geocoder
   google_places
   line-bot-api
-  mysql2
   net-smtp
   nokogiri
   omniauth-line
   omniauth-rails_csrf_protection
   open-uri
+  pg
   pry-rails
   puma (~> 5.0)
   rack-cors

@@ -7,7 +7,8 @@ ruby "3.2.2"
 gem "rails", "~> 7.0.8"
 
 # Use MySQL as the database for Active Record
-gem "mysql2"
+# gem "mysql2"
+gem 'pg'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"

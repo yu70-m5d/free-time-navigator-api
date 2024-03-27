@@ -11,7 +11,10 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2024_03_19_034441) do
-  create_table "contacts", charset: "utf8mb3", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "contacts", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
     t.string "subject", null: false
@@ -20,7 +23,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_19_034441) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "favorites", charset: "utf8mb3", force: :cascade do |t|
+  create_table "favorites", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "spot_id", null: false
     t.datetime "created_at", null: false
@@ -30,11 +33,11 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_19_034441) do
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
-  create_table "spots", charset: "utf8mb3", force: :cascade do |t|
+  create_table "spots", force: :cascade do |t|
     t.string "name", null: false
     t.string "address", null: false
-    t.float "latitude", limit: 53, null: false
-    t.float "longitude", limit: 53, null: false
+    t.float "latitude", null: false
+    t.float "longitude", null: false
     t.string "place_id"
     t.float "rating"
     t.time "average_stay_time"
@@ -45,7 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_19_034441) do
     t.index ["place_id"], name: "index_spots_on_place_id", unique: true
   end
 
-  create_table "taggings", charset: "utf8mb3", force: :cascade do |t|
+  create_table "taggings", force: :cascade do |t|
     t.bigint "spot_id", null: false
     t.bigint "tag_id", null: false
     t.datetime "created_at", null: false
@@ -55,7 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_19_034441) do
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
 
-  create_table "tags", charset: "utf8mb3", force: :cascade do |t|
+  create_table "tags", force: :cascade do |t|
     t.string "name", null: false
     t.integer "stay_time"
     t.datetime "created_at", null: false
@@ -63,7 +66,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_19_034441) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "tasks", charset: "utf8mb3", force: :cascade do |t|
+  create_table "tasks", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "tag_id"
     t.string "title", null: false
@@ -75,7 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_19_034441) do
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb3", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false
