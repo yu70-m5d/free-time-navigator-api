@@ -10,7 +10,7 @@
 #   https://dev.mysql.com/doc/refman/5.7/en/password-hashing.html
 #
 default: &default
-  adapter: mysql2
+  adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   encoding: utf8
@@ -52,9 +52,9 @@ test:
 production:
   <<: *default
   database: ftn_production
-  username: <%= Rails.application.credentials.planetscale&.fetch(:username) %>
-  password: <%= Rails.application.credentials.planetscale&.fetch(:password) %>
-  database: <%= Rails.application.credentials.planetscale&.fetch(:database) %>
-  host: <%= Rails.application.credentials.planetscale&.fetch(:host) %>
+  username: <%= Rails.application.credentials.neon&.fetch(:username) %>
+  password: <%= Rails.application.credentials.neon&.fetch(:password) %>
+  database: <%= Rails.application.credentials.neon&.fetch(:database) %>
+  host: <%= Rails.application.credentials.neon&.fetch(:host) %>
   ssl_mode: verify_identity
   sslca: "/etc/ssl/certs/ca-certificates.crt"
