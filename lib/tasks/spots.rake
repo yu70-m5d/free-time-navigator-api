@@ -3,8 +3,8 @@ namespace :spots do
   task get_places: :environment do
     api_key = Rails.application.credentials.api&.fetch(:google_api_key)
     client = GooglePlaces::Client.new(api_key)
-    lat = 35.644276
-    lng = 139.699145
+    lat = 35.6972642
+    lng = 139.7656113
     radius = 1500
     tags = Tag.all
     types = []
