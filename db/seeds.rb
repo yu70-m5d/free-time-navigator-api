@@ -10,14 +10,8 @@
 # load(Rails.root.join("db", "seeds", "tag_seeds.rb"))
 
 # db/seeds/spot_seeds.rb
-load(Rails.root.join("db", "seeds", "spot_seeds.rb"))
-load(Rails.root.join("db", "seeds", "spot_seeds_20240114.rb"))
-load(Rails.root.join("db", "seeds", "spot_seeds_20240123.rb"))
-load(Rails.root.join("db", "seeds", "spot_seeds_20240125.rb"))
+load(Rails.root.join("db", "seeds", "spot_seeds_20240411.rb"))
 
 
 # db/seeds/tagging_seeds.rb
-load(Rails.root.join("db", "seeds", "tagging_seeds.rb"))
-load(Rails.root.join("db", "seeds", "tagging_seeds_20240114.rb"))
-load(Rails.root.join("db", "seeds", "tagging_seeds_20240123.rb"))
-load(Rails.root.join("db", "seeds", "tagging_seeds_20240125.rb"))
+load(Rails.root.join("db", "seeds", "tagging_seeds_20240411.rb"))
